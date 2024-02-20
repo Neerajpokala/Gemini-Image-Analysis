@@ -2,7 +2,7 @@ import streamlit as st
 import textwrap
 import os
 import PIL.Image
-#from IPython.display import Markdown
+from IPython.display import Markdown
 import google.generativeai as genai
 
 # Used to securely store your API key
@@ -31,8 +31,8 @@ def generate_questions_from_image(image):
     response.resolve()
     
     # Display the generated questions
-    st.markdown(to_markdown(response.text))
-
+    st.write(response.text)
+    print(response.text)
 def main():
     st.title("Image to Questions Generator")
     st.write("Upload an image and get questions generated based on it.")
