@@ -24,7 +24,7 @@ def generate_questions_from_image(image):
     st.image(image, caption='Uploaded Image', use_column_width=True)
     
     # Initialize generative model
-    model = genai.GenerativeModel(generative_model_name)
+    model = genai.GenerativeModel('gemini-pro-vision')
     
     # Generate questions based on the image
     response = model.generate_content(["Prepare 3 questions for the given image", image], stream=True)
