@@ -1,36 +1,47 @@
 import streamlit as st
-import tempfile
-import google.generativeai as genai
+import textwrap
 import os
 import PIL.Image
+from IPython.display import Markdown
+import google.generativeai as genai
 
-# Configure the API key
-os.environ['GOOGLE_API_KEY'] = 'AIzaSyAc7Ii4wHf_whau2q--rgjfdht8-I5xhSY'
+# Used to securely store your API key
+os.environ['GOOGLE_API_KEY'] = 'YOUR_API_KEY'
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
-# Define the function to generate questions
-def generate_questions(image):
-    model = genai.GenerativeModel('gemini-pro-vision')
-    response = model.generate_content(["Prepare 5 questions for the given image", image], stream=True)
+genai.configure(api_key=GOOGLE_API_KEY)
+for m in genai.list_models():
+    if 'generateContent' in m.supported_generation_methods:
+        generative_model_name = m.name
+        break
+
+def to_markdown(text):
+    text = text.replace('•', '  *')
+    return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+
+def generate_questions_from_image(image):
+    # Display the uploaded image
+    st.image(image, caption='Uploaded Image', use_column_width=True)
+    
+    # Initialize generative model
+    model = genai.GenerativeModel(generative_model_name)
+    
+    # Generate questions based on the image
+    response = model.generate_content(["Prepare 3 questions for the given image", image], stream=True)
     response.resolve()
-    return response.text
+    
+    # Display the generated questions
+    st.markdown(to_markdown(response.text))
 
-# Define the main Streamlit app
 def main():
-    st.title("Image Question Generation")
+    st.title("Image to Questions Generator")
+    st.write("Upload an image and get questions generated based on it.")
 
-    # File uploader widget
-    uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+    uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
-    if uploaded_file is not None:
-        # Display the uploaded image
-        image = PIL.Image.open(uploaded_file)
-        st.image(image, caption='Uploaded Image', use_column_width=True)
-
-        # Generate questions on button click
-        if st.button('Generate Questions'):
-            with st.spinner('Generating questions...'):
-                questions = generate_questions(image)
-                st.markdown(questions)
+    if uploaded_image is not None:
+        img = PIL.Image.open(uploaded_image)
+        generate_questions_from_image(img)
 
 if __name__ == "__main__":
     main()
