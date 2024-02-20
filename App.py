@@ -3,7 +3,7 @@ import textwrap
 import os
 import PIL.Image
 #from IPython.display import Markdown
-import google.generativeai as genai
+import google.generativeai as gena
 
 # Used to securely store your API key
 os.environ['GOOGLE_API_KEY'] = 'AIzaSyAc7Ii4wHf_whau2q--rgjfdht8-I5xhSY'
