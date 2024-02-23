@@ -49,7 +49,14 @@ def about_project():
         - **Streamlit**: Used to build the web interface of the application.
         - **PIL (Python Imaging Library)**: Utilized to handle image uploads and processing.
         - **GenerativeAI by Google**: Integrated to access state-of-the-art generative AI models for question generation.
+               """
+    )
 
+        st.markdown("<h1 style='text-align: left; color: white; font-size: 20px;'>Architecture of the project:</h1>", unsafe_allow_html=True)
+        st.image('Architecture.jpeg', use_column_width=True)
+
+        st.write(
+        """
         ## How It Works
         1. **Image Upload**: Users upload an image using the provided file uploader.
         2. **Question Generation**: The uploaded image is processed by a pre-trained generative AI model capable of understanding visual content.
