@@ -52,8 +52,8 @@ def about_project():
                """
     )
 
-        st.markdown("<h1 style='text-align: left; color: white; font-size: 20px;'>Architecture of the project:</h1>", unsafe_allow_html=True)
-        st.image('Architecture.jpeg', use_column_width=True)
+    st.markdown("<h1 style='text-align: left; color: white; font-size: 20px;'>Architecture of the project:</h1>", unsafe_allow_html=True)
+    st.image('Architecture.jpeg', use_column_width=True)
 
         st.write(
         """
