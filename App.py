@@ -2,7 +2,6 @@ import streamlit as st
 import textwrap
 import os
 import PIL.Image
-#from IPython.display import Markdown
 import google.generativeai as genai
 
 # Used to securely store your API key
@@ -14,10 +13,6 @@ for m in genai.list_models():
     if 'generateContent' in m.supported_generation_methods:
         generative_model_name = m.name
         break
-
-def to_markdown(text):
-    text = text.replace('•', '  *')
-    return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
 def generate_questions_from_image(image):
     # Display the uploaded image
@@ -34,18 +29,12 @@ def generate_questions_from_image(image):
     st.write(response.text)
     print(response.text)
 
-def main():
-    st.title("Image to Questions Generator")
-    st.write("Upload an image and get questions generated based on it.")
+def about_project():
+    st.title("About Project")
+    st.sidebar.title("Navigation")
+    st.sidebar.radio("Go to", ["About Project", "Image to Questions"])
 
-    uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-
-    if uploaded_image is not None:
-        img = PIL.Image.open(uploaded_image)
-        generate_questions_from_image(img)
-
-    st.sidebar.title("About")
-    st.sidebar.info(
+    st.write(
         """
         ## Project Overview
         The Image to Questions Generator is a web application designed to generate questions based on an uploaded image. Leveraging state-of-the-art generative AI models, the application processes the content of the image and formulates questions to prompt further understanding or analysis.
@@ -78,6 +67,25 @@ def main():
         The Image to Questions Generator is a practical application of machine learning technology, offering a convenient solution for generating questions from visual content. Whether used for educational purposes, content analysis, or creative exploration, the application demonstrates the potential of AI-driven tools to simplify complex tasks.
         """
     )
+
+def image_to_questions():
+    st.title("Image to Questions Generator")
+    st.write("Upload an image and get questions generated based on it.")
+
+    uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+
+    if uploaded_image is not None:
+        img = PIL.Image.open(uploaded_image)
+        generate_questions_from_image(img)
+
+def main():
+    st.sidebar.title("Navigation")
+    page = st.sidebar.radio("Go to", ["About Project", "Image to Questions"])
+
+    if page == "About Project":
+        about_project()
+    elif page == "Image to Questions":
+        image_to_questions()
 
 if __name__ == "__main__":
     main()
