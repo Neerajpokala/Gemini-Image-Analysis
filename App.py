@@ -32,7 +32,7 @@ def generate_questions_from_image(image):
 def about_project():
     st.title("About Project")
     st.sidebar.title("Navigation")
-    st.sidebar.radio("Go to", ["About Project", "Image to Questions"])
+    st.sidebar.radio("Go to", ["About Project", "Image to Questions"], key="about_radio")
 
     st.write(
         """
@@ -80,7 +80,7 @@ def image_to_questions():
 
 def main():
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["About Project", "Image to Questions"])
+    page = st.sidebar.radio("Go to", ["About Project", "Image to Questions"], key="main_radio")
 
     if page == "About Project":
         about_project()
