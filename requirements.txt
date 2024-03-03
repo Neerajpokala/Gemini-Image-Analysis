@@ -1,4 +1,4 @@
-Pillow==9.0.0
-IPython==8.21
+Pillow
+IPython
 streamlit==1.30
 google-generativeai
